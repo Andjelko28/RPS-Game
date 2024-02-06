@@ -1,0 +1,69 @@
+body,html{
+    margin: auto;
+    height: 100%;
+}
+
+.overlay {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    bottom: 0px;
+    background-color: rgb(128, 128, 128, 0.9);
+}
+
+.overlay-btn {
+    max-width: 500px;
+    max-height: 150px;
+    font-size: 4em;
+    margin: auto;
+}
+
+.title{
+    text-align: center;
+    font-size: 1em;
+}
+
+.players{
+    display: flex;
+    justify-content: center;
+}
+
+.player, .computer{
+    font-size: 2em;
+    margin: 30px;
+    text-align: center;
+}
+
+.options{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.rock{
+    background-image: url('./fist.png');
+    width: 128px;
+    height: 128px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.paper{
+    background-image: url('./hand-paper.png');
+    width: 128px;
+    height: 128px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.scissors{
+    background-image: url('./scissors.png');
+    width: 128px;
+    height: 128px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.p-count && .c-count{
+    text-align: center;
+}
