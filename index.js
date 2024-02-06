@@ -18,16 +18,42 @@ let playerCount = document.querySelector('.p-count');
 let computerCount = document.querySelector('.c-count');
 let choices = ['rock', 'paper', 'scissors'];
 
-let playerScore = 0;
-let computerScore = 0;
-let maxScore = 5;
-
 function computerChoice() {
     let comp = choices[Math.floor(Math.random() * 3)];
     console.log(comp);
     return comp;
 };
 
+
+function ui() {
+    let playerScore = 0;
+    let computerScore = 0;
+    let maxScore = 5;
+
+    function playerSc() {
+        playerScore++;
+        if (playerScore >= maxScore) {
+            alert("Player wins!");
+            location.reload();
+        } else {
+            playerCount.textContent = playerScore;
+        };
+    }
+
+    function computerSc() {
+        computerScore++;
+        if (computerScore >= maxScore) {
+            alert(`Computer Wins! Your score is ${playerScore} to the computers ${computerScore}.`);
+            location.reload();
+        } else {
+            computerCount.textContent = computerScore;
+        }
+    }
+    return { playerSc, computerSc }
+};
+
+
+let game = ui();
 
 function play(userSelection) {
     console.log(userSelection);
@@ -36,37 +62,22 @@ function play(userSelection) {
         console.log('Draw');
     } else if (userSelection == 'paper') {
         if (computerSelection == 'rock') {
-            computerScore++;
-            computerCount.textContent = computerScore;
+            game.computerSc();
         } else {
-            playerScore++;
-            playerCount.textContent = playerScore;
-
+            game.playerSc()
         }
     } else if (userSelection == 'scissors') {
         if (computerSelection == 'paper') {
-            computerScore++;
-            computerCount.textContent = computerScore;
+            game.computerSc();
         } else {
-            playerScore++;
-            playerCount.textContent = playerScore;
+            game.playerSc();
         }
     } else if (userSelection == 'rock') {
         if (computerSelection == 'scissors') {
-            computerScore++;
-            computerCount.textContent = computerScore;
+            game.computerSc();
         } else {
-            playerScore++;
-            playerCount.textContent = playerScore;
+            game.playerSc();
         }
     };
-    if (playerScore == maxScore) {
-        alert('Player win!')
-        location.reload();
-    } else if (computerScore == maxScore) {
-        alert("Computer wins!");
-        location.reload();
-    }
 }
 play();
-
