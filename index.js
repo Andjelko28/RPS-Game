@@ -16,67 +16,79 @@ let player = document.querySelector('.player');
 let computer = document.querySelector('.computer');
 let playerCount = document.querySelector('.p-count');
 let computerCount = document.querySelector('.c-count');
-let choices = ['rock', 'paper', 'scissors'];
-
-function computerChoice() {
-    let comp = choices[Math.floor(Math.random() * 3)];
-    console.log(comp);
-    return comp;
-};
 
 
-function ui() {
+function gameCreator() {
+
+    let playerChoice = '';
+    let computerChoice = '';
     let playerScore = 0;
     let computerScore = 0;
     let maxScore = 5;
+    let choices = ['rock', 'paper', 'scissors'];
 
-    function playerSc() {
-        playerScore++;
-        if (playerScore >= maxScore) {
-            alert("Player wins!");
-            location.reload();
-        } else {
-            playerCount.textContent = playerScore;
-        };
-    }
+    const getPlayerScore = () => playerScore;
+    const getComputerScore = () => computerScore;
+    const getMaxScore = () => maxScore;
+    const getPlayerChoice = () => playerChoice;
+    const getComputerChoice = () => computerChoice;
 
-    function computerSc() {
-        computerScore++;
-        if (computerScore >= maxScore) {
-            alert(`Computer Wins! Your score is ${playerScore} to the computers ${computerScore}.`);
-            location.reload();
-        } else {
-            computerCount.textContent = computerScore;
-        }
-    }
-    return { playerSc, computerSc }
-};
+    const setPlayerChoice = (choice) => playerChoice = choice;
+    const setComputerChoice = (choice) => computerChoice = choice;
 
+    const incrementPlayerScore = () => playerScore++;
+    const incrementComputerScore = () => computerScore++;
 
-let game = ui();
+    function computeChoice() {
+        let comp = choices[Math.floor(Math.random() * 3)];
+        console.log(comp);
+        return comp;
+    };
+
+    return { getPlayerScore, getComputerScore, getMaxScore, incrementPlayerScore, incrementComputerScore, computeChoice, getPlayerChoice, getComputerChoice, setPlayerChoice, setComputerChoice }
+}
+
+function uiCreator() {
+    const updateTextContent = (element, value) => element.textContent = value;
+
+    return { updateTextContent }
+}
+
+const game = gameCreator();
+const ui = uiCreator();
+
 
 function play(userSelection) {
     console.log(userSelection);
-    let computerSelection = computerChoice();
-    if (userSelection === computerSelection) {
+    game.setPlayerChoice(userSelection);
+    let computerChoice = game.computeChoice();
+    game.setComputerChoice(computerChoice);
+
+    if (game.getPlayerChoice() === game.getComputerChoice()) {
         console.log('Draw');
-    } else if (userSelection == 'paper') {
-        if (computerSelection == 'rock') {
-            game.computerSc();
+    } else if (game.getPlayerChoice() == 'paper') {
+        if (game.getComputerChoice() == 'rock') {
+            game.incrementPlayerScore();
+            ui.updateTextContent(player, game.getPlayerScore());
         } else {
-            game.playerSc()
+            game.incrementComputerScore();
+            ui.updateTextContent(comp, game.getCompScore());
         }
-    } else if (userSelection == 'scissors') {
-        if (computerSelection == 'paper') {
-            game.computerSc();
+    } else if (game.getPlayerChoice() == 'scissors') {
+        if (game.getComputerChoice() == 'paper') {
+            game.incrementPlayerScore();
+            ui.updateTextContent(player, game.getPlayerScore());
         } else {
-            game.playerSc();
+            game.incrementComputerScore();
+            ui.updateTextContent(comp, game.getCompScore());
         }
-    } else if (userSelection == 'rock') {
-        if (computerSelection == 'scissors') {
-            game.computerSc();
+    } else if (game.getPlayerChoice() == 'rock') {
+        if (game.getComputerChoice() == 'scissors') {
+            game.incrementPlayerScore();
+            ui.updateTextContent(player, game.getPlayerScore());
         } else {
-            game.playerSc();
+            game.incrementComputerScore();
+            ui.updateTextContent(comp, game.getCompScore());
         }
     };
 }
